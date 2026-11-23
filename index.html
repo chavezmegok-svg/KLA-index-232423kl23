@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para Yngrid 💌</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{--night:#1a0e22;--plum:#2a1534;--wine:#7a2147;--wine2:#a53a63;--rose:#f2a7bc;--gold:#f0d08a;--ink:#fbeaf0;--mute:#cfa9bd;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--night)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--night);color:var(--ink);font-family:'Lora',Georgia,'Times New Roman',serif;line-height:1.7;font-size:1.05rem;overflow-x:hidden}
+[hidden]{display:none!important}
+.script{font-family:'Pinyon Script','Snell Roundhand','Brush Script MT',cursive;font-weight:400;color:var(--rose);line-height:1.15}
+#sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.h{position:absolute;top:-30px;color:var(--wine2);opacity:.55;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(100vh + 60px)) rotate(40deg)}}
+section{position:relative;z-index:1;padding:64px 20px;max-width:640px;margin:0 auto;text-align:center}
+h2{font-size:2.6rem;margin:0 0 12px}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* sobre */
+#intro{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#intro h1{font-size:3.2rem;margin:0 0 28px}
+.env{position:relative;width:min(84vw,340px);aspect-ratio:1.5;background:var(--wine);border-radius:6px;cursor:pointer;border:0;padding:0;box-shadow:0 18px 40px rgba(0,0,0,.5);transition:opacity .5s}
+.env.gone{opacity:0}
+.flap{position:absolute;inset:0 0 auto 0;height:60%;background:var(--wine2);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s;z-index:3}
+.pocket{position:absolute;inset:0;background:#8d2753;clip-path:polygon(0 0,50% 60%,100% 0,100% 100%,0 100%);z-index:2;border-radius:6px}
+.env.open .flap{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);z-index:4;font-size:1.9rem;color:var(--gold);transition:opacity .3s}
+.env.open .seal{opacity:0}
+.to{position:absolute;left:0;right:0;bottom:10%;z-index:4;font-size:1.7rem;color:var(--gold)}
+#hint{margin-top:26px;color:var(--mute);font-style:italic}
+
+/* carta */
+#letter{background:var(--plum);border:1px solid rgba(242,167,188,.25);border-radius:16px;padding:34px 24px;text-align:left;opacity:0;transition:opacity .8s;margin-top:40px}
+#letter.show{opacity:1}
+#letter h3{font-size:2.3rem;margin:0 0 10px;text-align:center}
+.l{opacity:0;margin:0 0 14px}
+.show .l{animation:in .9s forwards;animation-delay:calc(var(--i)*1.7s)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pi{display:block;margin-top:8px;font-size:1.6rem;color:var(--gold);text-align:center}
+.sign{font-size:2rem;color:var(--gold);text-align:right;margin:10px 0 0}
+.go{display:block;margin:26px auto 0;background:var(--rose);color:var(--night);border:0;border-radius:999px;padding:12px 28px;font-weight:500}
+
+/* contador */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0 18px}
+.count div{background:var(--plum);border:1px solid rgba(242,167,188,.25);border-radius:12px;padding:14px 4px}
+.count b{display:block;font-size:2rem;font-weight:500;color:var(--gold);font-variant-numeric:tabular-nums}
+.count span{font-size:.85rem;color:var(--mute)}
+.since{color:var(--mute);margin:0}
+
+/* razones */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.card{position:relative;min-height:140px;perspective:700px;background:none;border:0;padding:0;color:inherit}
+.in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s}
+.card.flip .in{transform:rotateY(180deg)}
+.card.wide{grid-column:1/-1;min-height:190px}
+.f,.b{position:absolute;inset:0;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:12px}
+.f{background:var(--plum);border:1px solid rgba(242,167,188,.35);font-size:2.2rem;color:var(--rose)}
+.b{background:var(--rose);color:var(--night);transform:rotateY(180deg);font-size:.95rem;line-height:1.45}
+
+/* pregunta */
+#ask p.q{font-size:1.25rem;margin:0 0 28px}
+.btns{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:64px}
+#yes{background:var(--rose);color:var(--night);border:0;border-radius:999px;padding:14px 30px;font-weight:500;transition:transform .2s}
+#no{background:transparent;color:var(--mute);border:1px solid var(--mute);border-radius:999px;padding:12px 22px;z-index:5}
+#done .script{font-size:3rem;margin:0 0 10px}
+footer{position:relative;z-index:1;text-align:center;color:var(--mute);padding:10px 20px 50px;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){.show .l{animation:none;opacity:1}.in,.flap{transition:none}}
+</style>
+</head>
+<body>
+<div id="sky" aria-hidden="true"></div>
+
+<section id="intro">
+  <h1 class="script">Para ti, mi tiquitita</h1>
+  <button class="env" id="env" aria-label="Abrir el sobre">
+    <span class="flap"></span><span class="pocket"></span><span class="seal">♥</span>
+    <span class="to script">Yngrid Alinzon Tello Garcia</span>
+  </button>
+  <p id="hint">Toca el sobre 💌</p>
+
+  <div id="letter" hidden>
+    <h3 class="script">Hola, mi amor</h3>
+    <p class="l" style="--i:0">Quise hacer algo distinto a lo que una vez hice, y decirte todo lo que quiero que sepas y pienso, y que puedas abrirlo donde sea que estés y cuando sea que quieras.</p>
+    <p class="l" style="--i:1">Desde que llegaste a mi vida me llenaste de amor y comprensión como nadie lo había hecho nunca, y es algo que te agradezco muchísimo. Me devolviste algo que muchas personas me habían quitado, y ahora te lo quiero entregar para cuidarlo juntos: es el amor que estuvimos creando estos últimos meses.</p>
+    <p class="l" style="--i:2">Mi amor, sé que estos últimos días han sido complicados, estamos un poco distanciados y hemos llegado a creer que posiblemente no nos hagamos bien, pero te digo una cosa: yo no me iré hasta agotar todas mis alternativas, hasta que deje de respirar y deje de sentirte cerca mío. No me iré, porque quiero que seas tú esa persona que me vea llorar y me abrace, que me vea sudar y me limpie la cara, que me vea cansado y se acurruque encima mío para sentirme bien, así como lo has estado haciendo últimamente con cada abrazo que me das. No te quiero dejar ir y tampoco quiero irme, tengo muchos planes contigo como para dejarte sola en este mundo tan malvado.</p>
+    <p class="l" style="--i:3">Gracias por ser tú, por tu cariño y por quedarte.<span class="pi">Te amo ∞ × π</span></p>
+    <p class="l sign script" style="--i:4">Keller Chavez</p>
+    <button class="go l" style="--i:5" id="next">Seguir</button>
+  </div>
+</section>
+
+<main id="main" hidden>
+  <section id="time">
+    <h2 class="script">Nuestro tiempo</h2>
+    <p class="since">Juntos desde el 6 de octubre de 2026</p>
+    <div class="count" role="timer" aria-live="off">
+      <div><b id="d">0</b><span>días</span></div>
+      <div><b id="hh">0</b><span>horas</span></div>
+      <div><b id="mm">0</b><span>minutos</span></div>
+      <div><b id="ss">0</b><span>segundos</span></div>
+    </div>
+    <p>y cada segundo contigo vale la pena.</p>
+  </section>
+
+  <section id="why">
+    <h2 class="script">Por qué te quiero</h2>
+    <p class="since">Voltea cada corazón</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="ask">
+    <h2 class="script">Una pregunta</h2>
+    <p class="q">Mi tiquitita, ¿quieres seguir siendo mi enamorada?</p>
+    <div class="btns">
+      <button id="yes">Sí, claro que sí 💕</button>
+      <button id="no">No</button>
+    </div>
+  </section>
+
+  <section id="done" hidden>
+    <p class="script">Mi tiquitita</p>
+    <p>Prometo nunca moverme de tu lado, siempre tratar de hacerte feliz y ver una solución para cada problema, seguir amándote con la misma intensidad y adorándote como el primer día. Te amo.</p>
+    <p class="script" style="font-size:2.2rem;color:var(--gold);margin:0">Tuyo, Keller</p>
+  </section>
+  <footer>Hecho con mucho cariño, para ti ♥</footer>
+</main>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var START=new Date(2026,9,6,0,0,0); // 6 de octubre de 2026 (año, mes-1, día)
+
+function spawn(){
+  var s=document.createElement('span');
+  s.className='h';s.textContent='♥';
+  s.style.left=Math.random()*100+'vw';
+  s.style.fontSize=(10+Math.random()*18)+'px';
+  s.style.animationDuration=(7+Math.random()*6)+'s';
+  s.addEventListener('animationend',function(){s.remove()});
+  $('#sky').appendChild(s);
+}
+var timer=null;
+function hearts(){ if(reduce||timer)return; timer=setInterval(spawn,700); }
+
+var env=$('#env');
+env.addEventListener('click',function(){
+  if(env.classList.contains('open'))return;
+  env.classList.add('open');hearts();
+  setTimeout(function(){
+    env.classList.add('gone');
+    setTimeout(function(){
+      env.style.display='none';$('#hint').style.display='none';
+      var L=$('#letter');L.hidden=false;
+      requestAnimationFrame(function(){L.classList.add('show')});
+    },500);
+  },900);
+});
+
+$('#next').addEventListener('click',function(){
+  $('#main').hidden=false;
+  $('#next').style.display='none';
+  $('#time').scrollIntoView({behavior:reduce?'auto':'smooth'});
+});
+
+function tick(){
+  var d=Math.max(0,Date.now()-START.getTime());
+  $('#d').textContent=Math.floor(d/864e5);
+  $('#hh').textContent=Math.floor(d%864e5/36e5);
+  $('#mm').textContent=Math.floor(d%36e5/6e4);
+  $('#ss').textContent=Math.floor(d%6e4/1e3);
+}
+tick();setInterval(tick,1000);
+
+var reasons=[
+ 'A tu lado siento que puedo ser vulnerable sin miedo.',
+ 'Tu sonrisa pone brillo a mis días oscuros.',
+ 'Todo es mejor con tu compañía.',
+ 'Por tu manera tan extravagante de ser.',
+ 'Tu manera de ver el lado positivo de las cosas.',
+ 'Porque soy mejor persona a tu lado.',
+ 'Porque eres la mejor persona que he conocido.',
+ 'Porque eres mi tiquitita bella.',
+ 'Porque eres mi reina hermosa.',
+ 'Por esos ojitos hermosos que me alegran cada tarde que pasamos juntos.',
+ 'En sí no hay motivos específicos para quererte, te amo por quien eres y todo lo que representas, y porque quieres ser mejor día a día. Solo te amo y te amaré mañana, pasado y siempre.'
+];
+var grid=$('#grid');
+reasons.forEach(function(t,i){
+  var b=document.createElement('button');
+  b.className='card'+(i===reasons.length-1?' wide':'');b.setAttribute('aria-label','Razón para quererte. Toca para voltear.');
+  b.innerHTML='<span class="in"><span class="f">♥</span><span class="b"></span></span>';
+  b.querySelector('.b').textContent=t;
+  b.addEventListener('click',function(){b.classList.toggle('flip')});
+  grid.appendChild(b);
+});
+
+var no=$('#no'),yes=$('#yes'),tries=0;
+var msgs=['No','¿Segura? 🥺','Piénsalo bien…','Ese botón no funciona 😅','Mejor di que sí 💕'];
+function dodge(e){
+  e.preventDefault();tries++;
+  no.textContent=msgs[Math.min(tries,msgs.length-1)];
+  no.style.position='fixed';
+  var w=no.offsetWidth,h=no.offsetHeight;
+  no.style.left=(12+Math.random()*Math.max(0,innerWidth-w-24))+'px';
+  no.style.top=(12+Math.random()*Math.max(0,innerHeight-h-24))+'px';
+  yes.style.transform='scale('+Math.min(1.4,1+tries*0.08)+')';
+}
+no.addEventListener('pointerenter',dodge);
+no.addEventListener('click',dodge);
+
+yes.addEventListener('click',function(){
+  $('#ask').hidden=true;$('#done').hidden=false;
+  $('#done').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+  if(!reduce){for(var i=0;i<50;i++)setTimeout(spawn,i*70);}
+});
+})();
+</script>
+</body>
+</html>
